@@ -34,6 +34,10 @@ guard 'rspec', :version => 2, :all_after_pass => false, :cli => '--drb' do
     "spec/requests/#{m[1]}_spec.rb"
   end
   
+  watch(%r{^app/views/layouts/(.+)/}) do |m|
+    "spec/requests/#{m[1]}_spec.rb"
+  end
+  
   watch(%r{^spec/support/(.+)\.rb$})                  { "spec" }
   watch('spec/spec_helper.rb')                        { "spec" }
   watch('config/routes.rb')                           { "spec/routing" }
