@@ -25,10 +25,24 @@ describe "StaticPages" do
         visit root_path
       end
 
+      it "should show the correct micropost count" do
+        page.should have_content("2 microposts")
+      end
+
       it "should render the user's feed" do
         user.feed.each do |item|
           page.should have_selector("tr##{item.id}", text: item.content)
         end
+      end
+
+      describe "pagination" do
+        before do
+          50.times { FactoryGirl.create(:micropost, user: user, content: "Lorem ipsum!") }
+          visit root_path
+        end
+
+        it { should have_link('Next') }
+        it { should have_link('2') }
       end
     end
   end
